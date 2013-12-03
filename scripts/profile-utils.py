@@ -8,8 +8,6 @@
 #
 ###################################################################################
 import os, time, logging, logging.config
-import time
-
 
 #Logging
 logging.basicConfig(filename='profiler.log', level=logging.DEBUG, format='%(asctime)s %(message)s')
