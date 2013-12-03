@@ -6,6 +6,7 @@
 #
 # Uses BeautifulSoup to scrape the web page.
 # use docopt for arguments parsing
+# Created by smtechnocrat$gmail.com
 #
 ###################################################################################
 """Usage: hnews-scrape.py [-vd] [OUTPUT_DIR] ...
