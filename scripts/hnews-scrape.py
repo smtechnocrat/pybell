@@ -6,6 +6,8 @@
 #
 # Uses BeautifulSoup to scrape the web page.
 # use docopt for arguments parsing
+# Currently uses a logging. 
+# TODO pass logging enabled and filename as a switch
 # Created by smtechnocrat$gmail.com
 #
 ###################################################################################
@@ -32,7 +34,7 @@ from BeautifulSoup import BeautifulSoup
 from docopt import docopt
 
 #Logging
-logging.basicConfig(filename='testscript.log', level=logging.DEBUG, format='%(asctime)s %(message)s')
+logging.basicConfig(filename='hnews-scrape.log', level=logging.DEBUG, format='%(asctime)s %(message)s')
 logger = logging.getLogger('hackerNewsscraper')
 
 
@@ -92,7 +94,7 @@ def parsesoup(soup):
 
     return stories
 
-
+@timefunc
 def writecontents(contents, filename):
     linenum=1
     with open(filename, 'w') as f:
