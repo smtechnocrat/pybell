@@ -8,6 +8,7 @@
 #
 ###################################################################################
 import os, time, logging, logging.config
+import cProfile
 
 #Logging
 logging.basicConfig(filename='profiler.log', level=logging.DEBUG, format='%(asctime)s %(message)s')
@@ -24,14 +25,26 @@ def timefunc(f):
 
     return f_timer
       
+def profilefunc(f):
+    def profiled_func(*args, **kwargs):
+        profile = cProfile.Profile()
+        try:
+            profile.enable()
+            result = f(*args,**kwargs)
+            profile.disable()
+            return result
+        finally:
+            profile.print_stats()
+    return profiled_func
+
 def get_number():
   for x in xrange(500000):
       yield x
 
+@profilefunc
 def test_func():
     for x in get_number():
         res = x ^ x
-
     return 'some result'
 
 # A cutom profiler using basic time functions 
@@ -43,7 +56,7 @@ class myprofiler():
 
     @property
     def elapsed(self):
-        return time.time() - self.start
+        return time.time() - self.start    
 
     def checkpoint(self,name='myprofiler'):
         logger.info('{timer} {checkpoint} took {elapsed} seconds.'.format(
@@ -59,7 +72,6 @@ class myprofiler():
         pass
 
 
+
 if __name__ == '__main__':
-    profiler = myprofiler('Test Profiler') 
-    test_func()
-    profiler.checkpoint('Finished:')
+    res = test_func()
